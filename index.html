@@ -2,11 +2,27 @@
 <html>
     <head>
         <title>AOK</title>
+        <link rel="icon" href="images/aok-icon.png" type="image/png">
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-
+        <div id="posts-container"></div>
+        <div id="analytics-container">
+            <div style="text-align: center;">
+                <img src="images/drag-icon.png" width="30">
+            </div>
+            <p style=><img src="images/analytics-icon.svg" width="16"> Analytics</p>
+            <div id="analytics">
+                <p id="avg-view-time" style="color: yellow">Average view time: 0.00 s</p>
+                <p id="scroll-speed" style="color: yellow">Scroll speed: 0 px/s</p>
+                <p id="total-likes" style="color: rgb(8, 197, 8)">Total likes: 0</p>
+                <p id="total-unlikes" style="color:red">Total unlikes: 0</p>
+                <p id="genre-likes" style="color: rgb(0, 102, 255)">Favorite genre (likes): unknown</p>
+            </div>
+        </div>
     </body>
     <script src="profiles.js"></script>
+    <script src="analytics.js"></script>
     <script src="script.js"></script>
+    <script src="drag-container.js"></script>
 </html>
