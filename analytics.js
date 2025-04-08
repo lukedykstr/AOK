@@ -125,6 +125,32 @@ function getFavoriteGenreLikes() {
     return favorite_genre
 }
 
+function getFavoriteGenreViewTime() {
+    let genre_view_time = {
+        'nature': 0,
+        'humor': 0,
+        'motivational': 0,
+        'educational': 0
+    }
+
+    for (let post_id in analytics.post_stats) {
+        const post = posts[post_id]
+        genre_view_time[post.genre] += analytics.post_stats[post_id].total_view_time
+    }
+
+    let favorite_genre = 'unknown'
+    let max_view = 0
+
+    for (let genre in genre_view_time) {
+        if (genre_view_time[genre] > max_view) {
+            max_view = genre_view_time[genre]
+            favorite_genre = genre
+        }
+    }
+
+    return favorite_genre
+}
+
 // Credit to Ryan from Medium.com:
 // https://medium.com/@ryan_forrester_/get-ip-address-in-javascript-how-to-guide-13c91383b33f
 async function getIP() {
@@ -162,6 +188,9 @@ function updateAnalytics() {
 
     const fav_genre_likes_label = document.getElementById('genre-likes')
     fav_genre_likes_label.innerHTML = `Favorite genre (likes): ${getFavoriteGenreLikes()}`
+
+    const fav_genre_view_time = document.getElementById('genre-view')
+    fav_genre_view_time.innerHTML = `Favorite genre (view time): ${getFavoriteGenreViewTime()}`
 
     const gens_triggered_label = document.getElementById('gens-triggered')
     gens_triggered_label.innerHTML = `Page updates triggered: ${analytics.gens_triggered}`
