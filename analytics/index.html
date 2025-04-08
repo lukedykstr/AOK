@@ -6,56 +6,86 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <h1>General</h1>
+        <a href="../index.html">&lt; Back</a>
+        <h1>Overview</h1>
         <table>
             <tr>
                 <th>Statistic</th>
                 <th>Value</th>
             </tr>
             <tr>
-                <td>Average post view time</td>
+                <td>
+                    User IP address
+                    <p id="desc">The user's IP address, if available.</p>
+                </td>
+                <td id="user-ip"></td>
+            </tr>
+            <tr>
+                <td>
+                    User agent information
+                    <p id="desc">Information about the user's browser and OS.</p>
+                </td>
+                <td id="user-agent"></td>
+            </tr>
+            <tr>
+                <td>
+                    Access date
+                    <p id="desc">The date the user accessed the site.</p>
+                </td>
+                <td id="access-date"></td>
+            </tr>
+            <tr>
+                <td>
+                    Session time
+                    <p id="desc">The total amount of time the user spent on the page.</p>
+                </td>
+                <td id="session-time">0.00 s</td>
+            </tr>
+            <tr>
+                <td>
+                    Average post view time
+                    <p id="desc">The average amount of time a post was visible on screen for.</p>
+                </td>
                 <td id="avg-view-time">0.00 s</td>
             </tr>
             <tr>
-                <td>Average scroll speed</td>
+                <td>
+                    Average scroll speed
+                    <p id="desc">Average page scrolling speed in pixels per second.</p>
+                </td>
                 <td id="avg-scroll-speed">0.00 px/s</td>
             </tr>
             <tr>
-                <td>Total user likes</td>
+                <td>
+                    Total user likes
+                    <p id="desc">Number of times the current user clicked the like button.</p>
+                </td>
                 <td id="total-likes">0</td>
             </tr>
             <tr>
-                <td>Total user unlikes</td>
+                <td>
+                    Total user unlikes
+                    <p id="desc">Number of times the current user unliked a post.</p>
+                </td>
                 <td id="total-unlikes">0</td>
             </tr>
             <tr>
-                <td>Page updates triggered</td>
+                <td>
+                    Page updates triggered
+                    <p id="desc">Number of times the user reached the bottom of the posts page and triggered an update to generate more.</p>
+                </td>
                 <td id="updates-triggered">0</td>
             </tr>
         </table>
-        <script>
-            const stats = document.getElementById('stats')
-            const analytics = JSON.parse(localStorage.getItem('analytics')) || {
-                scroll_speed: 0,
-                avg_scroll_speed: 0,
-                avg_view_time: 0,
-                total_likes: 0,
-                total_unlikes: 0,
-                gens_triggered: 0,
-                post_stats: {}
-            }
+        <p id="download" onclick="save()">Download your data</p>
+        <div style="display: flex; align-items: first baseline;">
+            <h1>Post-specific data</h1>
+            <p style="margin-left: auto;">Engagement score</p>
+        </div>
+        <div id="post-data-container">
 
-            const avg_view_time_cell = document.getElementById('avg-view-time')
-            const avg_scroll_speed_cell = document.getElementById('avg-scroll-speed')
-            const total_likes_cell = document.getElementById('total-likes')
-            const total_unlikes_cell = document.getElementById('total-unlikes')
-            const updates_triggered_cell = document.getElementById('updates-triggered')
-
-            avg_view_time_cell.innerText = analytics.avg_view_time.toFixed(2) + ' s'
-            avg_scroll_speed_cell.innerText = analytics.avg_scroll_speed.toFixed(2) + ' px/s'
-            total_likes_cell.innerText = analytics.total_likes
-            total_unlikes_cell.innerText = analytics.total_unlikes
-            updates_triggered_cell.innerText = analytics.gens_triggered
-        </script>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.min.js"></script>
+        <script src="script.js"></script>
     </body>
 </html>

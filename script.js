@@ -167,6 +167,7 @@ function generatePostElements(start_index) {
             check_time: -1,
             view_time: 0,
             last_view_time: 0,
+            total_view_time: 0,
             user_likes: 0,
             user_unlikes: 0,
             genre: posts[i].genre,

@@ -1,16 +1,21 @@
 let analytics = {
+    date: new Date().toISOString(),
+    user_agent: window.navigator.userAgent,
     scroll_speed: 0,
     avg_scroll_speed: 0,
     avg_view_time: 0,
     total_likes: 0,
     total_unlikes: 0,
     gens_triggered: 0,
+    session_time: 0,
+    user_ip: 'n/a',
     post_stats: {}
 }
 
 const avg_scroll_poll_count = 100
 
 let prev_scroll_y = window.scrollY
+let prev_scroll_time = performance.now()
 let prev_time = performance.now()
 
 let scroll_speed = 0
@@ -22,14 +27,14 @@ function trackScrollSpeed() {
     let current_time     = performance.now()
 
     let scroll_delta = current_scroll_y - prev_scroll_y
-    let time_delta   = current_time - prev_time
+    let time_delta   = current_time - prev_scroll_time
     let scroll_speed = (scroll_delta / time_delta) * 1000
 
     prev_scroll_y = current_scroll_y
-    prev_time     = current_time
+    prev_scroll_time     = current_time
 
     analytics.scroll_speed = scroll_speed
-    scroll_speed_history.push(scroll_speed)
+    if (scroll_speed > 0) scroll_speed_history.push(scroll_speed)
 
     if (scroll_speed_history.length > avg_scroll_poll_count) {
         scroll_speed_history.shift()
@@ -58,10 +63,11 @@ function trackViewingTimes() {
             } else {
                 let current_time = performance.now()
                 let view_time = current_time - analytics.post_stats[post_id].check_time
-                analytics.post_stats[post_id].view_time       += view_time
-                analytics.post_stats[post_id].last_view_time   = analytics.post_stats[post_id].view_time
-                analytics.post_stats[post_id].check_time       = current_time
-                analytics.post_stats[post_id].avg_scroll_speed = analytics.avg_scroll_speed
+                analytics.post_stats[post_id].view_time       += view_time  // The current view time
+                analytics.post_stats[post_id].total_view_time += view_time  // Total view time over whole session
+                analytics.post_stats[post_id].last_view_time   = analytics.post_stats[post_id].view_time // The previous view time
+                analytics.post_stats[post_id].check_time       = current_time // Current time to help calculate time delta
+                analytics.post_stats[post_id].avg_scroll_speed = analytics.avg_scroll_speed // Update the average scroll speed for this post while we're at it
             }
         } else if (analytics.post_stats[post_id].view_time > 0) {
             analytics.post_stats[post_id].check_time = -1
@@ -119,7 +125,25 @@ function getFavoriteGenreLikes() {
     return favorite_genre
 }
 
+// Credit to Ryan from Medium.com:
+// https://medium.com/@ryan_forrester_/get-ip-address-in-javascript-how-to-guide-13c91383b33f
+async function getIP() {
+    try {
+        const response = await fetch('https://api.ipify.org?format=json')
+        const data = await response.json()
+        analytics.user_ip = data.ip
+    } catch (error) {
+        console.error('Error fetching IP address:', error);
+    }
+}
+
 function updateAnalytics() {
+    const time_delta = performance.now() - prev_time
+    prev_time = performance.now()
+    analytics.session_time += time_delta
+    const session_time_label = document.getElementById('session-time')
+    session_time_label.innerHTML = `Session time: ${(analytics.session_time / 1000).toFixed(2)} s`
+
     const scroll_speed_label = document.getElementById('scroll-speed')
     scroll_speed_label.innerHTML = `Scroll speed: ${analytics.scroll_speed.toFixed(2)} px/s`
 
@@ -142,9 +166,14 @@ function updateAnalytics() {
     const gens_triggered_label = document.getElementById('gens-triggered')
     gens_triggered_label.innerHTML = `Page updates triggered: ${analytics.gens_triggered}`
 
+    const user_ip_label = document.getElementById('user-ip')
+    user_ip_label.innerHTML = `Your IP address: ${analytics.user_ip}`
+
     localStorage.setItem('analytics', JSON.stringify(analytics))
 }
 
 setInterval(trackScrollSpeed, 50)
 setInterval(trackViewingTimes, 25)
 setInterval(updateAnalytics, 100)
+
+getIP()

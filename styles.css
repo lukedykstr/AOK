@@ -16,7 +16,7 @@ body {
 #analytics-container {
     font-family: 'Lucida Console', monospace;
     position: fixed;
-    top: 60px;
+    top: 30px;
     left: 30px;
     width: 300px;
     background-color: #151616d0;
