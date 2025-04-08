@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AOK - analytics</title>
+        <link rel="icon" href="../images/aok-icon.png" type="image/png">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <p id="stats"></p>
+        <script>
+            const stats = document.getElementById('stats')
+            const analytics = localStorage.getItem('analytics')
+            stats.innerHTML = analytics
+        </script>
+    </body>
+</html>

@@ -34,3 +34,7 @@ body {
     font-size: 10pt;
     font-style: italic;
 }
+
+a {
+    font-family: 'Lucida Console', monospace;
+}
