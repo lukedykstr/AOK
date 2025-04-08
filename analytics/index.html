@@ -6,11 +6,56 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <p id="stats"></p>
+        <h1>General</h1>
+        <table>
+            <tr>
+                <th>Statistic</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Average post view time</td>
+                <td id="avg-view-time">0.00 s</td>
+            </tr>
+            <tr>
+                <td>Average scroll speed</td>
+                <td id="avg-scroll-speed">0.00 px/s</td>
+            </tr>
+            <tr>
+                <td>Total user likes</td>
+                <td id="total-likes">0</td>
+            </tr>
+            <tr>
+                <td>Total user unlikes</td>
+                <td id="total-unlikes">0</td>
+            </tr>
+            <tr>
+                <td>Page updates triggered</td>
+                <td id="updates-triggered">0</td>
+            </tr>
+        </table>
         <script>
             const stats = document.getElementById('stats')
-            const analytics = localStorage.getItem('analytics')
-            stats.innerHTML = analytics
+            const analytics = JSON.parse(localStorage.getItem('analytics')) || {
+                scroll_speed: 0,
+                avg_scroll_speed: 0,
+                avg_view_time: 0,
+                total_likes: 0,
+                total_unlikes: 0,
+                gens_triggered: 0,
+                post_stats: {}
+            }
+
+            const avg_view_time_cell = document.getElementById('avg-view-time')
+            const avg_scroll_speed_cell = document.getElementById('avg-scroll-speed')
+            const total_likes_cell = document.getElementById('total-likes')
+            const total_unlikes_cell = document.getElementById('total-unlikes')
+            const updates_triggered_cell = document.getElementById('updates-triggered')
+
+            avg_view_time_cell.innerText = analytics.avg_view_time.toFixed(2) + ' s'
+            avg_scroll_speed_cell.innerText = analytics.avg_scroll_speed.toFixed(2) + ' px/s'
+            total_likes_cell.innerText = analytics.total_likes
+            total_unlikes_cell.innerText = analytics.total_unlikes
+            updates_triggered_cell.innerText = analytics.gens_triggered
         </script>
     </body>
 </html>

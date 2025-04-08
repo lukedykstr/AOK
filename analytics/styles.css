@@ -1,5 +1,29 @@
 body {
     font-family: 'Lucida Console', monospace;
-    background-color: #151616d0;
+    background-color: #151616;
     color: #d8e0dd;
+}
+
+h1 {
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+}
+
+td {
+    padding: 5px;
+}
+
+tr {
+    border: solid;
+}
+
+tr:nth-child(even) {
+    background-color: #272929;
+}
+
+td:nth-child(even) {
+    text-align: right;
 }

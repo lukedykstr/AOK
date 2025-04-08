@@ -1,6 +1,7 @@
 let analytics = {
     scroll_speed: 0,
     avg_scroll_speed: 0,
+    avg_view_time: 0,
     total_likes: 0,
     total_unlikes: 0,
     gens_triggered: 0,
@@ -67,6 +68,8 @@ function trackViewingTimes() {
             analytics.post_stats[post_id].view_time  = 0
         }
     }
+
+    analytics.avg_view_time = getAverageViewTime()
 }
 
 function getAverageViewTime() {
@@ -124,7 +127,7 @@ function updateAnalytics() {
     avg_scroll_speed_label.innerHTML = `Average scroll speed: ${analytics.avg_scroll_speed.toFixed(2)} px/s`
     
     const avg_time_label = document.getElementById('avg-view-time')
-    const avg_time = getAverageViewTime() / 1000
+    const avg_time = analytics.avg_view_time / 1000
     avg_time_label.innerHTML = `Average view time: ${avg_time.toFixed(2)} s`
 
     const total_likes_label = document.getElementById('total-likes')
