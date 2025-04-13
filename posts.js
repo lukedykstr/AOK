@@ -1,13 +1,17 @@
 /**
- * @author: Luke Dykstra
- * @description: This script creates a simple social media post layout using JavaScript.
+ * posts.js
+ * 
+ * This script generates and displays the synthetic posts on the page.
+ * 
+ * Author: Luke Dykstra
+ * Date: 2025-04-13
  */
 
 const genre_imgs_count = 9   // Number of images per genre
 const init_post_count  = 15  // Initial number of posts to generate
 const post_width_value = 440 // Width of the post images in pixels
 const post_width = post_width_value + 'px'
-const genres = ['nature', 'humor', 'motivational', 'educational']
+const genres = ['nature', 'humor', 'motivational', 'educational', 'news']
 
 // Array to store post objects
 // Each post object contains the source of the image, profile name, and genre
@@ -175,7 +179,8 @@ function generatePostElements(start_index) {
             likes: posts[i].likes,
             post_id: i,
             post_src: posts[i].src,
-            avg_scroll_speed: 0
+            avg_scroll_speed: 0,
+            timestamp: new Date().toISOString()
         }
     }
 
