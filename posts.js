@@ -192,6 +192,7 @@ function clearUsedImages() {
     used_imgs = []
 }
 
+// Check if user has reached the end of the posts page and generate more posts if so
 function keepGeneratingPosts() {
     const page_y = window.scrollY + window.innerHeight
 
@@ -206,7 +207,9 @@ function keepGeneratingPosts() {
     }
 }
 
+// Generate the initial posts and their elements
 generatePosts(init_post_count)
 generatePostElements(0)
 
+// Keep generating more posts if needed
 setInterval(keepGeneratingPosts, 500)
